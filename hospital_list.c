@@ -99,8 +99,8 @@ NODE *get_node(LIST *list, int position){
 int is_special_user(NODE *node){
 	if(node != NULL){
 		if(node->ID >= 60) return 1;
-		else return 0;
 	}
+	return 0;
 }
 
 void delete_list(LIST **list){
@@ -156,7 +156,7 @@ LIST *get_list(FILE *stream){
 
 int get_old_positions(LIST *old_list, LIST *new_list){
 	if(old_list != NULL && new_list != NULL){
-		int i, key;
+		int i;
 		NODE *aux;
 		
 		for(i = 1; (aux = get_node(new_list, i)) != NULL; i++){
