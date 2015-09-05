@@ -14,13 +14,13 @@ struct list{
 	int size;
 };
 
-NODE *create_node(int id, int oldpos, int newpos){
+NODE *create_node(int id, int pos){
 	NODE *node = (NODE*)malloc(sizeof(NODE));
 
 	if(node != NULL){
 		node->ID = id;
-		node->old_position = oldpos;
-		node->cur_position = newpos;
+		node->old_position = pos;
+		node->cur_position = pos;
 		node->next = node;
 	}
 
@@ -38,7 +38,7 @@ LIST *create_list(void){
 	LIST *list = (LIST*)malloc(sizeof(LIST));
 
 	if(list != NULL){
-		NODE *sentry = create_node(-1, -1, -1);
+		NODE *sentry = create_node(-1, -1);
 		if(sentry != NULL){
 			list->sentry = sentry;
 			list->last = sentry;
@@ -54,7 +54,7 @@ LIST *create_list(void){
 
 int insert_end(LIST *list, int id){
 	if(list != NULL){
-		NODE *new_node = create_node(id, (list->size) + 1, (list->size) + 1);
+		NODE *new_node = create_node(id, list->size + 1);
 		if(new_node != NULL){
 			list->last->next = new_node;
 			new_node->next = list->sentry;
@@ -142,9 +142,11 @@ LIST *get_list(FILE *stream){
 	if(list != NULL){
 		int aux;
 
-		while(!feof(stream)){
-			fscanf(stream, "%d", &aux);
+		while(fscanf(stream, "%d", &aux) != EOF){
 			insert_end(list, aux);
+		}
+		if(list->last == NULL){
+			remove_end(list);
 		}
 
 	}
