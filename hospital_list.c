@@ -157,7 +157,7 @@ int get_old_positions(LIST *old_list, LIST *new_list){
 		int i, key;
 		NODE *aux;
 		
-		for(i = 1; (aux = get_node(new_list, 1)) != NULL; i++){
+		for(i = 1; (aux = get_node(new_list, i)) != NULL; i++){
 			aux->old_position = search_list(old_list, aux->ID);
 		}
 		return 1;
@@ -173,8 +173,7 @@ LIST *get_special_list(LIST *full_list){
 		int i;
 		NODE *aux;
 
-		
-		for(i = 1; (aux = get_node(full_list, 1)) != NULL; i++){
+		for(i = 1; (aux = get_node(full_list, i)) != NULL; i++){
 			if(is_special_user(aux)) insert_end(special_list, aux->ID);
 		}
 
